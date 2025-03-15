@@ -1,12 +1,17 @@
 package com.example.chess.domain.piece;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class Piece {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Piece {
 
-    public abstract String getName();
+    private PieceType pieceType;
+    private Colour colour;
 
 }
