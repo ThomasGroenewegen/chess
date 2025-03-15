@@ -1,15 +1,10 @@
 package com.example.chess.controller;
 
-import com.example.chess.domain.Column;
-import com.example.chess.domain.Game;
-import com.example.chess.domain.Row;
-import com.example.chess.domain.Square;
+import com.example.chess.domain.*;
 import com.example.chess.service.ChessService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/chess")
@@ -22,6 +17,14 @@ public class ChessController {
     @GetMapping("/init-game")
     public Game getSquareList() {
         return chessService.getGame();
+    }
+
+    @PostMapping("/move")
+    public Game move(@RequestBody Move move) {
+
+        log.info("Move " + move);
+
+        return chessService.executeMove(move);
     }
 
 }

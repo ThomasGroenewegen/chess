@@ -12,4 +12,9 @@ public class Square {
 
     private Row row;
     private Column column;
+
+    @Override
+    public String toString() {
+        return column.name() + row.getValue();
+    }
 }
