@@ -2,13 +2,12 @@ package com.example.chess.service;
 
 import com.example.chess.domain.Game;
 import com.example.chess.domain.Move;
-import com.example.chess.domain.exception.InitialSquareIsEmptyException;
+import com.example.chess.domain.MoveValidationResult;
 import com.example.chess.domain.piece.Piece;
+import com.example.chess.service.move_validation.MoveValidationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Slf4j
 @Service
@@ -16,6 +15,7 @@ import java.util.Objects;
 public class ChessService {
 
     private final BoardInitializerService boardInitializerService;
+    private final MoveValidationService moveValidationService;
     private static Game game;
 
     public Game getGame() {
@@ -26,19 +26,16 @@ public class ChessService {
         return game;
     }
 
-    public Game executeMove(Move move) {
+    public String executeMove(Move move) {
         Game game = getGame();
 
-        validateMove(move);
+        MoveValidationResult moveValidationResult = moveValidationService.validateMove(move, game);
 
-        doMove(move);
-        return game;
-    }
-
-    private void validateMove(Move move) {
-        if (Objects.isNull(game.getBoard().get(move.getInitialSquare()))) {
-            log.error("Invalid move: initial square is empty");
-            throw new InitialSquareIsEmptyException(move.getInitialSquare());
+        if (moveValidationResult.isValidMove()) {
+            doMove(move);
+            return "Executed move";
+        } else {
+            return moveValidationResult.getReason();
         }
     }
 

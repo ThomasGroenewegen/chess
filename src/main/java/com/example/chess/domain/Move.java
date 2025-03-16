@@ -1,5 +1,6 @@
 package com.example.chess.domain;
 
+import com.example.chess.domain.board.Square;
 import lombok.*;
 
 @Getter

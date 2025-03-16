@@ -1,4 +1,4 @@
-package com.example.chess.domain;
+package com.example.chess.domain.board;
 
 import lombok.Getter;
 

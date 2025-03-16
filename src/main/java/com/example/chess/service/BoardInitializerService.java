@@ -1,9 +1,9 @@
 package com.example.chess.service;
 
-import com.example.chess.domain.Column;
+import com.example.chess.domain.board.Column;
 import com.example.chess.domain.Game;
-import com.example.chess.domain.Row;
-import com.example.chess.domain.Square;
+import com.example.chess.domain.board.Row;
+import com.example.chess.domain.board.Square;
 import com.example.chess.domain.piece.Colour;
 import com.example.chess.domain.piece.Piece;
 import com.example.chess.domain.piece.PieceType;

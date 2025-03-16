@@ -14,13 +14,13 @@ public class ChessController {
 
     private final ChessService chessService;
 
-    @GetMapping("/init-game")
+    @GetMapping("/board")
     public Game getSquareList() {
         return chessService.getGame();
     }
 
     @PostMapping("/move")
-    public Game move(@RequestBody Move move) {
+    public String move(@RequestBody Move move) {
 
         log.info("Move " + move);
 
