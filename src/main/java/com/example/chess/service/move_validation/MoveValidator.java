@@ -23,14 +23,14 @@ public abstract class MoveValidator {
         return rowsMoved == columnsMoved;
     }
 
-    private int getRowsMoved(Move move) {
+    int getRowsMoved(Move move) {
         Square start = move.getInitialSquare();
         Square end = move.getFinalSquare();
 
         return Math.abs(start.getRow().getValue() - end.getRow().getValue());
     }
 
-    private int getColumnsMoved(Move move) {
+    int getColumnsMoved(Move move) {
         Square start = move.getInitialSquare();
         Square end = move.getFinalSquare();
 

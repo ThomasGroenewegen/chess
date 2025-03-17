@@ -17,6 +17,10 @@ import java.util.Objects;
 public class MoveValidationService {
 
     private final BishopMoveValidator bishopMoveValidator;
+    private final KingMoveValidator kingMoveValidator;
+    private final KnightMoveValidator knightMoveValidator;
+    private final PawnMoveValidator pawnMoveValidator;
+    private final QueenMoveValidator queenMoveValidator;
     private final RookMoveValidator rookMoveValidator;
 
     public MoveValidationResult validateMove(Move move, Game game) {
@@ -26,8 +30,8 @@ public class MoveValidationService {
             return genericMoveValidationResult;
         }
 
-        Piece pieceToMove = game.getBoard().get(move.getInitialSquare());
-        return getValidator(pieceToMove).validate(move, game);
+
+        return validateMoveForPiece(move, game);
     }
 
     private MoveValidationResult validateGenericMoveConstraints(Move move, Game game) {
@@ -45,7 +49,7 @@ public class MoveValidationService {
         }
     }
 
-    private static boolean isMoveToSameColourPiece(Piece pieceToMove, Piece pieceOnEndSquare) {
+    private boolean isMoveToSameColourPiece(Piece pieceToMove, Piece pieceOnEndSquare) {
         if (pieceOnEndSquare == null) {
             return false;
         } else {
@@ -53,11 +57,18 @@ public class MoveValidationService {
         }
     }
 
-    private MoveValidator getValidator(Piece piece) {
-        return switch (piece.getPieceType()) {
+    private MoveValidationResult validateMoveForPiece(Move move, Game game) {
+        Piece pieceToMove = game.getBoard().get(move.getInitialSquare());
+
+        MoveValidator moveValidator = switch (pieceToMove.getPieceType()) {
             case PieceType.BISHOP -> bishopMoveValidator;
+            case PieceType.KING -> kingMoveValidator;
+            case PieceType.KNIGHT -> knightMoveValidator;
+            case PieceType.PAWN -> pawnMoveValidator;
+            case PieceType.QUEEN -> queenMoveValidator;
             case PieceType.ROOK -> rookMoveValidator;
-            default -> throw new IllegalStateException("Unexpected value: " + piece.getPieceType());
         };
+
+        return moveValidator.validate(move, game);
     }
 }
